@@ -23,16 +23,17 @@ BmiCalcWindow::BmiCalcWindow()
 	setMainLayout(pVBoxLayout);
 
 	auto pFormLayout = new FormLayout(this);
+	pFormLayout->setSpacing(6);
 	pVBoxLayout->addLayout(pFormLayout);
 
-	pFormLayout->addRow(L"Рост", new LineEdit(this));
-	pFormLayout->addRow(L"Вес", new LineEdit(this));
-	pFormLayout->addRow(L"Возраст", new LineEdit(this));
+	pFormLayout->addRow(L"Рост:", new LineEdit(this));
+	pFormLayout->addRow(L"Вес:", new LineEdit(this));
+	pFormLayout->addRow(L"Возраст:", new LineEdit(this));
 	
 	auto pRadioButtonsLayout = new HBoxLayout(this);
 	pRadioButtonsLayout->addWidget(new RadioButton(this, L"мужской", true));
 	pRadioButtonsLayout->addWidget(new RadioButton(this, L"женский"));
-	pFormLayout->addRow(L"Пол", pRadioButtonsLayout);
+	pFormLayout->addRow(L"Пол:", pRadioButtonsLayout);
 
 	auto pWindowButtonsLayout = new HBoxLayout(this);
 	auto pSpacer = new SpacerItem();
@@ -60,6 +61,7 @@ BmiCalcWindow::~BmiCalcWindow()
 
 void BmiCalcWindow::showBMI()
 {
+	// TODO: get inputs from LineEdits
 	auto calcResult = BmiCalculator::instance().calculate(180, 70, 20, true);
 
 	auto pShowWindow = new ShowBmiWindow(this);

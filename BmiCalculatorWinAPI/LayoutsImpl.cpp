@@ -348,8 +348,8 @@ namespace LayoutsImpl
 	{
 		for (auto [pLabel, pItem] : items)
 		{
-			int labelWidth = std::min(pLabel->minSize().width(), maxSz.width()); //maxSz.width() / 7 * 2;
-			int itemWidth = maxSz.width() - labelWidth - spacing * 2; //maxSz.width() / 7 * 5;
+			int labelWidth = std::min(pLabel->minSize().width(), maxSz.width());
+			int itemWidth = maxSz.width() - labelWidth - spacing * 2;
 
 			const auto szLabel = ApplyItemsSizePolicy(*pLabel, Size(labelWidth, maxSz.height()), false, true);
 			const auto szItem = ApplyItemsSizePolicy(*pItem, Size(itemWidth, maxSz.height()), false, true);
@@ -358,7 +358,7 @@ namespace LayoutsImpl
 			Rect itemRect(Point(startPos.x() + labelWidth + spacing, startPos.y()), szItem);
 
 			labelRect.setLeftTop(Point(
-				labelRect.leftTop().x() + labelWidth - szLabel.width(),
+				labelRect.leftTop().x(),
 				labelRect.leftTop().y() + (maxSz.height() - labelRect.height()) / 2
 			));
 

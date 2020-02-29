@@ -62,22 +62,22 @@ BmiCalculator::BmiCalculator()
 		Color::makeRed(),
 	},
 	mensFatLevelsImages_{
-		Bitmap(IDB_BITMAP1),
-		Bitmap(IDB_BITMAP2),
-		Bitmap(IDB_BITMAP3),
-		Bitmap(IDB_BITMAP4),
-		Bitmap(IDB_BITMAP5),
-		Bitmap(IDB_BITMAP5),
-		Bitmap(IDB_BITMAP5),
-	},
-	womensFatLevelsImages_{
 		Bitmap(IDB_BITMAP6),
 		Bitmap(IDB_BITMAP7),
 		Bitmap(IDB_BITMAP8),
 		Bitmap(IDB_BITMAP9),
 		Bitmap(IDB_BITMAP10),
 		Bitmap(IDB_BITMAP10),
-		Bitmap(IDB_BITMAP10),
+		Bitmap(IDB_BITMAP10)
+	},
+	womensFatLevelsImages_{
+		Bitmap(IDB_BITMAP1),
+		Bitmap(IDB_BITMAP2),
+		Bitmap(IDB_BITMAP3),
+		Bitmap(IDB_BITMAP4),
+		Bitmap(IDB_BITMAP5),
+		Bitmap(IDB_BITMAP5),
+		Bitmap(IDB_BITMAP5)
 	}
 {
 	// средний возраст

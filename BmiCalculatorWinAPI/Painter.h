@@ -17,7 +17,7 @@ public:
 	explicit Painter(PaintDevice* pPaintDevice);
 
 	void drawBitmap(const Rect& dest, const Bitmap& bitmap, const Rect& source);
-	void drawText(const std::wstring& text, const Font& font, const Rect& rect, const Color& color);
+	void drawText(const std::wstring& text, const Font& font, const Rect& rect, const Color& color, int align);
 
 private:
 	PaintDevice* pPaintDevice_ = nullptr;

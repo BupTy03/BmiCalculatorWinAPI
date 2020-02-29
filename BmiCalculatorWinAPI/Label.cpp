@@ -5,6 +5,7 @@
 #include "Application.h"
 #include "Rect.h"
 #include "Point.h"
+#include "Align.h"
 
 
 Label::Label(Widget* pParent, const std::wstring text)
@@ -14,7 +15,7 @@ Label::Label(Widget* pParent, const std::wstring text)
 	, painter_ { this }
 {
 	initPaintDevice();
-	setMinSize(Size(50, 50));
+	setMinSize(Size(80, 50));
 }
 
 Label::~Label()
@@ -47,7 +48,7 @@ LRESULT Label::widgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 			painter_.drawBitmap(clientRect(), bitmap_, Rect(Point(0, 0), bitmap_.size()));
 
 		if (!std::empty(text_))
-			painter_.drawText(text_, font(), clientRect(), textColor());
+			painter_.drawText(text_, font(), clientRect(), textColor(), Align::ALIGN_LEFT | Align::ALIGN_VCENTER);
 
 		break;
 	}

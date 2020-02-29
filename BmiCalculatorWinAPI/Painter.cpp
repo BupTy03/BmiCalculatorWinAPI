@@ -1,5 +1,7 @@
 #include "Painter.h"
 
+#include "Align.h"
+#include "LayoutsImpl.h"
 #include "Size.h"
 #include "Point.h"
 #include "Rect.h"
@@ -36,7 +38,7 @@ void Painter::drawBitmap(const Rect& dest, const Bitmap& bitmap, const Rect& sou
 	EndPaint(pPaintDevice_->getWindowHandle(), &ps);
 }
 
-void Painter::drawText(const std::wstring& text, const Font& font, const Rect& rect, const Color& textColor)
+void Painter::drawText(const std::wstring& text, const Font& font, const Rect& rect, const Color& textColor, int align)
 {
 	if (std::empty(text))
 		return;
@@ -60,11 +62,12 @@ void Painter::drawText(const std::wstring& text, const Font& font, const Rect& r
 
 		ReleaseDC(pPaintDevice_->getWindowHandle(), paintDeviceDC);
 
-		// aligning text by center
-		if (rect.width() > textSize.width())
-			textPos.setX(textPos.x() + (rect.width() - textSize.width()) / 2);
+		// aligning text
+		// TODO: align MUST INFLUENCE
+		if (rect.width() > textSize.width()) // align horizontal left
+			textPos.setX(textPos.x() + rect.width() - textSize.width());
 
-		if(rect.height() > textSize.height())
+		if (rect.height() > textSize.height()) // align vertical center
 			textPos.setY(textPos.y() + (rect.height() - textSize.height()) / 2);
 
 		// setting text color
@@ -73,6 +76,6 @@ void Painter::drawText(const std::wstring& text, const Font& font, const Rect& r
 	}
 
 	SetBkMode(hdc, TRANSPARENT);
-	TextOut(hdc, textPos.x(), textPos.y(), std::data(text), std::size(text));
+	TextOut(hdc, textPos.x(), textPos.y(), text.c_str(), std::size(text));
 	EndPaint(pPaintDevice_->getWindowHandle(), &ps);
 }
