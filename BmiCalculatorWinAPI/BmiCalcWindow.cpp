@@ -2,6 +2,7 @@
 
 #include "logging.h"
 
+#include "BmiCalculator.h"
 #include "ShowBmiWindow.h"
 #include "FormLayout.h"
 #include "HBoxLayout.h"
@@ -59,7 +60,11 @@ BmiCalcWindow::~BmiCalcWindow()
 
 void BmiCalcWindow::showBMI()
 {
+	auto calcResult = BmiCalculator::instance().calculate(180, 70, 20, true);
+
 	auto pShowWindow = new ShowBmiWindow(this);
-	pShowWindow->setText(L"BMI: 1000");
+	pShowWindow->setBitmap(calcResult.bitmap());
+	pShowWindow->setText(calcResult.text());
+	pShowWindow->setTextColor(calcResult.color());
 	pShowWindow->show();
 }

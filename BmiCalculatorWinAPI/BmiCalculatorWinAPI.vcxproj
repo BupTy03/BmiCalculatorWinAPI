@@ -23,6 +23,7 @@
     <ClCompile Include="AbstractLinearLayout.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Bitmap.cpp" />
+    <ClCompile Include="BmiCalculator.cpp" />
     <ClCompile Include="BmiCalcWindow.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CheckBox.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="Align.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Bitmap.h" />
+    <ClInclude Include="BmiCalculator.h" />
     <ClInclude Include="BmiCalcWindow.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CheckBox.h" />

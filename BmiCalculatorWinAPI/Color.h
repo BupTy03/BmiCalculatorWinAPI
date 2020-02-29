@@ -34,6 +34,10 @@ public:
 	std::uint8_t alpha() const;
 	void setAlpha(std::uint8_t alpha);
 
+	static Color makeRed();
+	static Color makeGreen();
+	static Color makeBlue();
+
 private:
 	std::uint32_t rgbaColor_ = 0;
 };

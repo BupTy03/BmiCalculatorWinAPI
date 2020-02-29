@@ -76,6 +76,21 @@ void Color::setAlpha(std::uint8_t alpha)
 	rgbaColor_ |= alpha;
 }
 
+Color Color::makeRed()
+{
+	return Color(255, 0, 0);
+}
+
+Color Color::makeGreen()
+{
+	return Color(0, 255, 0);
+}
+
+Color Color::makeBlue()
+{
+	return Color(0, 0, 255);
+}
+
 COLORREF ToColorRef(Color color)
 {
 	return RGB(color.red(), color.green(), color.blue());
