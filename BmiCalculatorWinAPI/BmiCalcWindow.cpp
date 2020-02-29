@@ -63,8 +63,8 @@ void BmiCalcWindow::showBMI()
 	auto calcResult = BmiCalculator::instance().calculate(180, 70, 20, true);
 
 	auto pShowWindow = new ShowBmiWindow(this);
-	pShowWindow->setBitmap(calcResult.bitmap());
-	pShowWindow->setText(calcResult.text());
-	pShowWindow->setTextColor(calcResult.color());
+	pShowWindow->setLabelBitmap(calcResult.bitmap());
+	pShowWindow->setLabelText(calcResult.text());
+	pShowWindow->setLabelTextColor(calcResult.color());
 	pShowWindow->show();
 }

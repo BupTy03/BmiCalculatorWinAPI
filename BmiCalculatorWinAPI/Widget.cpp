@@ -210,9 +210,7 @@ LRESULT Widget::proxyWidgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 		if (!SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pWidget)))
 		{
 			if (GetLastError() != 0) 
-			{
 				return FALSE;
-			}
 		}
 	}
 	else 

@@ -61,7 +61,8 @@ private:
 private:
 	FatLevelsStrings fatLevelsStrings_;
 	FatLevelsColors fatLevelsColors_;
-	BitmapsArray fatLevelsImages_;
+	BitmapsArray mensFatLevelsImages_;
+	BitmapsArray womensFatLevelsImages_;
 	AgesBMIList bmiByAge_;
 };
 

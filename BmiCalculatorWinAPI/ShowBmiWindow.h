@@ -2,6 +2,7 @@
 
 #include "Window.h"
 #include "Bitmap.h"
+#include "Color.h"
 
 #include <string>
 
@@ -14,8 +15,9 @@ public:
 	explicit ShowBmiWindow(Window* parent);
 	~ShowBmiWindow() override;
 
-	void setText(std::wstring text);
-	void setBitmap(Bitmap bitmap);
+	void setLabelText(std::wstring text);
+	void setLabelTextColor(Color color);
+	void setLabelBitmap(Bitmap bitmap);
 
 private:
 	Label* pBitmapLabel_{ nullptr };

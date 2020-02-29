@@ -20,7 +20,6 @@ ShowBmiWindow::ShowBmiWindow(Window* parent)
 	pMainLayout->addWidget(pBitmapLabel_);
 	pMainLayout->setAlign(pBitmapLabel_, Align::ALIGN_HCENTER);
 
-	pTextLabel_->setTextColor(Color(255, 0, 0));
 	Font labelFont(L"Consolas");
 	labelFont.setFontWeight(Font::FontWeight::ExtraBold);
 	labelFont.setHeight(35);
@@ -44,12 +43,17 @@ ShowBmiWindow::~ShowBmiWindow()
 	LogDebug("~ShowBmiWindow()");
 }
 
-void ShowBmiWindow::setText(std::wstring text)
+void ShowBmiWindow::setLabelText(std::wstring text)
 {
 	pTextLabel_->setText(std::move(text));
 }
 
-void ShowBmiWindow::setBitmap(Bitmap bitmap)
+void ShowBmiWindow::setLabelTextColor(Color color)
+{
+	pTextLabel_->setTextColor(color);
+}
+
+void ShowBmiWindow::setLabelBitmap(Bitmap bitmap)
 {
 	pBitmapLabel_->setBitmap(std::move(bitmap));
 }

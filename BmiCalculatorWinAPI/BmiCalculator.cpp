@@ -1,5 +1,7 @@
 #include "BmiCalculator.h"
 
+#include "resource.h"
+
 #include <cassert>
 #include <sstream>
 
@@ -24,7 +26,6 @@ static std::wstring DoubleToString(double value, int precision)
 
 BmiCalculationResult BmiCalculator::calculate(int height, int weight, int age, bool gender)
 {
-	// TODO: сделать чтобы gender(пол) на что-то влиял
 	const double heightInMeters = height * 0.01;
 	const double bmiValue = weight / static_cast<double>(heightInMeters * heightInMeters);
 
@@ -33,7 +34,9 @@ BmiCalculationResult BmiCalculator::calculate(int height, int weight, int age, b
 
 	return BmiCalculationResult(
 		L"Ваш BMI: " + DoubleToString(bmiValue, 2) + L". " + message,
-		fatLevelsImages_.at(static_cast<std::size_t>(fatLevel)),
+		gender 
+			? mensFatLevelsImages_.at(static_cast<std::size_t>(fatLevel)) 
+			: womensFatLevelsImages_.at(static_cast<std::size_t>(fatLevel)),
 		fatLevelsColors_.at(static_cast<std::size_t>(fatLevel))
 	);
 }
@@ -51,21 +54,30 @@ BmiCalculator::BmiCalculator()
 	},
 	fatLevelsColors_{
 		Color::makeRed(),
-		Color::makeGreen(),
+		Color(124, 194, 159),
 		Color::makeRed(),
 		Color::makeRed(),
 		Color::makeRed(),
 		Color::makeRed(),
 		Color::makeRed(),
 	},
-	fatLevelsImages_{
-		Bitmap(),
-		Bitmap(),
-		Bitmap(),
-		Bitmap(),
-		Bitmap(),
-		Bitmap(),
-		Bitmap(),
+	mensFatLevelsImages_{
+		Bitmap(IDB_BITMAP1),
+		Bitmap(IDB_BITMAP2),
+		Bitmap(IDB_BITMAP3),
+		Bitmap(IDB_BITMAP4),
+		Bitmap(IDB_BITMAP5),
+		Bitmap(IDB_BITMAP5),
+		Bitmap(IDB_BITMAP5),
+	},
+	womensFatLevelsImages_{
+		Bitmap(IDB_BITMAP6),
+		Bitmap(IDB_BITMAP7),
+		Bitmap(IDB_BITMAP8),
+		Bitmap(IDB_BITMAP9),
+		Bitmap(IDB_BITMAP10),
+		Bitmap(IDB_BITMAP10),
+		Bitmap(IDB_BITMAP10),
 	}
 {
 	// средний возраст
@@ -89,6 +101,6 @@ BmiCalculator::BmiCalculator()
 	oldAge.add(41, FatLevel::FourthGradeObesity);
 
 	// таблица возрастов
-	bmiByAge_.add(18, std::move(middleAge));
+	bmiByAge_.add(0, std::move(middleAge));
 	bmiByAge_.add(30, std::move(oldAge));
 }

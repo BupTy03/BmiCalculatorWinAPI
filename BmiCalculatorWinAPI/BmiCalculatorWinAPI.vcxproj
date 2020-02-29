@@ -73,6 +73,7 @@
     <ClInclude Include="predicates.h" />
     <ClInclude Include="RadioButton.h" />
     <ClInclude Include="Rect.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SegmentsList.h" />
     <ClInclude Include="ShowBmiWindow.h" />
     <ClInclude Include="signal.h" />
@@ -83,6 +84,21 @@
     <ClInclude Include="VBoxLayout.h" />
     <ClInclude Include="Widget.h" />
     <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BmiCalculatorWinAPI.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\f1.bmp" />
+    <Image Include="images\f2.bmp" />
+    <Image Include="images\f3.bmp" />
+    <Image Include="images\f4.bmp" />
+    <Image Include="images\f5.bmp" />
+    <Image Include="images\m1.bmp" />
+    <Image Include="images\m2.bmp" />
+    <Image Include="images\m3.bmp" />
+    <Image Include="images\m4.bmp" />
+    <Image Include="images\m5.bmp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

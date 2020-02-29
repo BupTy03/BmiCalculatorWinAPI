@@ -203,5 +203,45 @@
     <ClInclude Include="BmiCalculator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BmiCalculatorWinAPI.rc">
+      <Filter>Файлы ресурсов</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\f1.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="images\f2.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="images\f3.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="images\f4.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="images\f5.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="images\m1.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="images\m2.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="images\m3.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="images\m4.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="images\m5.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>
