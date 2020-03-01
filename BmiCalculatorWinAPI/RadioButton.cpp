@@ -4,6 +4,8 @@
 #include "Rect.h"
 #include "Point.h"
 
+#include <commctrl.h>
+
 
 RadioButton::RadioButton(Widget* pParent, const std::wstring& text, bool beginGroup)
 	: Widget{ pParent, L"BUTTON", text,
@@ -16,8 +18,12 @@ RadioButton::RadioButton(Widget* pParent, const std::wstring& text, bool beginGr
 		checked_ = true;
 	}
 
-	setNormalSize(Size{ 120, 23 });
-	setMinSize(Size{ 30, 23 });
+	SIZE szStruct;
+	Button_GetIdealSize(getWindowHandle(), &szStruct);
+	setNormalSize(Size(szStruct.cx, szStruct.cy));
+
+	setHorizontalSizePolicy(SizePolicy::Normal);
+	setMinSize(Size(50, 23));
 }
 
 RadioButton::~RadioButton()

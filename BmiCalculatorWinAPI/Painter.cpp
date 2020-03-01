@@ -63,12 +63,10 @@ void Painter::drawText(const std::wstring& text, const Font& font, const Rect& r
 		ReleaseDC(pPaintDevice_->getWindowHandle(), paintDeviceDC);
 
 		// aligning text
-		// TODO: align MUST INFLUENCE
-		if (rect.width() > textSize.width()) // align horizontal left
-			textPos.setX(textPos.x() + rect.width() - textSize.width());
-
-		if (rect.height() > textSize.height()) // align vertical center
-			textPos.setY(textPos.y() + (rect.height() - textSize.height()) / 2);
+		Rect textRect(textPos, textSize);
+		textRect = LayoutsImpl::ApplyItemsVerticalAlignment(textRect, rect, align);
+		textRect = LayoutsImpl::ApplyItemsHorizontalAlignment(textRect, rect, align);
+		textPos = textRect.leftTop();
 
 		// setting text color
 		SelectObject(hdc, font.nativeHandle());

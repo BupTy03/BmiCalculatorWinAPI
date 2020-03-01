@@ -17,7 +17,7 @@ public:
 
 	void setLabelText(std::wstring text);
 	void setLabelTextColor(Color color);
-	void setLabelBitmap(Bitmap bitmap);
+	void setLabelBitmap(const Bitmap& bitmap);
 
 private:
 	Label* pBitmapLabel_{ nullptr };

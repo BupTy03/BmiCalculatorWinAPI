@@ -41,6 +41,12 @@ public:
 		int angle = 0
 	);
 
+	Font(const Font& other);
+	Font& operator=(const Font& other);
+
+	Font(Font&&) noexcept = default;
+	Font& operator=(Font&&) noexcept = default;
+
 	HFONT nativeHandle() const;
 
 	bool isNull() const;

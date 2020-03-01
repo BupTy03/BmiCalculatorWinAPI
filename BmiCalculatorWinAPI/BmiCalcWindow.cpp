@@ -1,6 +1,7 @@
 #include "BmiCalcWindow.h"
 
 #include "logging.h"
+#include "resource.h"
 
 #include "BmiCalculator.h"
 #include "ShowBmiWindow.h"
@@ -31,10 +32,19 @@ BmiCalcWindow::BmiCalcWindow()
 	pFormLayout->addRow(L"Возраст:", new LineEdit(this));
 	
 	auto pRadioButtonsLayout = new HBoxLayout(this);
-	pRadioButtonsLayout->addWidget(new RadioButton(this, L"мужской", true));
-	pRadioButtonsLayout->addWidget(new RadioButton(this, L"женский"));
+
+	auto pMenRadioButton = new RadioButton(this, L"мужской", true);
+	pRadioButtonsLayout->addWidget(pMenRadioButton);
+
+	auto pWomenRadioButton = new RadioButton(this, L"женский");
+	pRadioButtonsLayout->addWidget(pWomenRadioButton);
+
+	pRadioButtonsLayout->setAlign(pMenRadioButton, Align::ALIGN_CENTER);
+	pRadioButtonsLayout->setAlign(pWomenRadioButton, Align::ALIGN_CENTER);
+
 	pFormLayout->addRow(L"Пол:", pRadioButtonsLayout);
 
+	
 	auto pWindowButtonsLayout = new HBoxLayout(this);
 	auto pSpacer = new SpacerItem();
 	pWindowButtonsLayout->addSpacerItem(pSpacer);

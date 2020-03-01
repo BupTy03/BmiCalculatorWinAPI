@@ -105,7 +105,7 @@ namespace LayoutsImpl
 			width = widget.minSize().width();
 			break;
 		case SizePolicy::Normal:
-			width = (!vertical) &&hasMaximized ? widget.minSize().width() : std::min(width, widget.normalSize().width());
+			width = (!vertical) && hasMaximized ? widget.minSize().width() : std::min(width, widget.normalSize().width());
 			break;
 		default:
 			assert(false);
@@ -134,18 +134,18 @@ namespace LayoutsImpl
 	{
 		if (align & ALIGN_VCENTER)
 		{
-			itemRect = MoveRect(itemRect, Point{ itemRect.leftTop().x(), 
-				maxRect.leftTop().y() + (maxRect.height() - itemRect.height()) / 2 });
+			itemRect = MoveRect(itemRect, Point(itemRect.leftTop().x(), 
+				maxRect.leftTop().y() + (maxRect.height() - itemRect.height()) / 2));
 		}
 		else if (align & ALIGN_TOP)
 		{
-			itemRect = MoveRect(itemRect, Point{ itemRect.leftTop().x(), 
-				maxRect.leftTop().y() });
+			itemRect = MoveRect(itemRect, Point(itemRect.leftTop().x(), 
+				maxRect.leftTop().y()));
 		}
 		else if (align & ALIGN_BOTTOM)
 		{
-			itemRect = MoveRect(itemRect, Point{ itemRect.leftTop().x(), 
-				maxRect.leftBottom().y() - itemRect.height() });
+			itemRect = MoveRect(itemRect, Point(itemRect.leftTop().x(), 
+				maxRect.leftTop().y() + maxRect.height() - itemRect.height()));
 		}
 		
 		return itemRect;
@@ -155,18 +155,18 @@ namespace LayoutsImpl
 	{
 		if (align & ALIGN_HCENTER)
 		{
-			itemRect = MoveRect(itemRect, Point{ 
-				maxRect.leftBottom().x() + (maxRect.width() - itemRect.width()) / 2, 
-				itemRect.leftTop().y() });
+			itemRect = MoveRect(itemRect, Point(
+				maxRect.leftTop().x() + (maxRect.width() - itemRect.width()) / 2,
+				itemRect.leftTop().y()));
 		}
 		else if (align & ALIGN_LEFT)
 		{
-			itemRect = MoveRect(itemRect, Point{ maxRect.leftBottom().x(), itemRect.leftTop().y() });
+			itemRect = MoveRect(itemRect, Point(maxRect.leftTop().x(), itemRect.leftTop().y()));
 		}
 		else if (align & ALIGN_RIGHT)
 		{
-			itemRect = MoveRect(itemRect, Point{ maxRect.rightTop().x() - itemRect.height(), 
-				itemRect.leftTop().y() });
+			itemRect = MoveRect(itemRect, Point(maxRect.leftTop().x() + maxRect.width() - itemRect.width(),
+				itemRect.leftTop().y()));
 		}
 
 		return itemRect;
@@ -273,7 +273,7 @@ namespace LayoutsImpl
 			if (it != std::cend(alignments) && it->item == pItem)
 				alignment = it->alignment;
 
-			if (!hasMaximized && maxSz.width() > sz.width())
+			if (maxSz.width() > sz.width())
 				r = ApplyItemsHorizontalAlignment(r, Rect(r.leftTop(), maxSz), alignment);
 
 			if (maxSz.height() > sz.height())
@@ -334,13 +334,13 @@ namespace LayoutsImpl
 		if (maxSizedCount > 0)
 		{
 			const auto residualWidth = rect.width() - minSizedWidthSum - normalMinSizedWidthSum - sumSpacing;
-			ApplyRectForHorizontalLayoutItems(items, rect.leftTop(), Size{ static_cast<int>(residualWidth / maxSizedCount),
-				rect.height() }, spacing, alignments, true);
+			ApplyRectForHorizontalLayoutItems(items, rect.leftTop(), 
+				Size(static_cast<int>(residualWidth / maxSizedCount), rect.height()), spacing, alignments, true);
 		}
 		else if (!items.empty())
 		{
-			ApplyRectForHorizontalLayoutItems(items, rect.leftTop(), Size{ static_cast<int>(rect.width() / std::size(items)),
-				rect.height() }, spacing, alignments, false);
+			ApplyRectForHorizontalLayoutItems(items, rect.leftTop(), 
+				Size(static_cast<int>(rect.width() / std::size(items)), rect.height()), spacing, alignments, false);
 		}
 	}
 

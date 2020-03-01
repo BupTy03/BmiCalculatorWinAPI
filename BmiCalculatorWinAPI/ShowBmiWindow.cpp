@@ -53,7 +53,7 @@ void ShowBmiWindow::setLabelTextColor(Color color)
 	pTextLabel_->setTextColor(color);
 }
 
-void ShowBmiWindow::setLabelBitmap(Bitmap bitmap)
+void ShowBmiWindow::setLabelBitmap(const Bitmap& bitmap)
 {
-	pBitmapLabel_->setBitmap(std::move(bitmap));
+	pBitmapLabel_->setBitmap(bitmap);
 }

@@ -80,7 +80,7 @@ public:
 	void setVerticalSizePolicy(SizePolicy policy);
 
 	Font font() const;
-	void setFont(Font font);
+	void setFont(const Font& font);
 
 	Color textColor() const;
 	void setTextColor(Color color);
@@ -98,7 +98,7 @@ public:
 	void addChild(Widget* pChild);
 	void removeChild(Widget* pChild);
 
-	const std::vector<Widget*>& children() const;
+	std::vector<Widget*> children() const;
 
 protected:
 	static LRESULT CALLBACK proxyWidgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

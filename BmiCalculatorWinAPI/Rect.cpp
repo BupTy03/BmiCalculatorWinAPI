@@ -25,7 +25,7 @@ void PrintRect(const Rect& rect)
 
 Rect MoveRect(const Rect& rect, const Point& pos)
 {
-	return Rect{ pos, rect.size() };
+	return Rect(pos, rect.size());
 }
 
 static Size ScaleSizeProportional(Size destSize, Size sourceSize)

@@ -43,6 +43,11 @@ public:
 
 	~FontImpl() { if(fontHandle_ != nullptr) DeleteObject(fontHandle_); }
 
+	std::shared_ptr<FontImpl> clone() const
+	{
+		return std::make_shared<FontImpl>(name_, height_, width_, style_, weight_, angle_);
+	}
+
 	static std::shared_ptr<FontImpl> Create(
 		const std::wstring& name,
 		int height,
@@ -87,6 +92,17 @@ private:
 Font::Font(const std::wstring& name, int height, int width, int style, FontWeight weight, int angle)
 	: pImpl_{FontImpl::Create(name, height, width, style, weight, angle)}
 {
+}
+
+Font::Font(const Font& other)
+	: pImpl_{ other.pImpl_ ? other.pImpl_->clone() : nullptr }
+{
+}
+
+Font& Font::operator=(const Font& other)
+{
+	*this = Font(other);
+	return *this;
 }
 
 HFONT Font::nativeHandle() const

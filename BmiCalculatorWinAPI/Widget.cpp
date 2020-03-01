@@ -23,11 +23,11 @@ Widget::RegisteredClassesSet Widget::registeredClasses_;
 
 Widget::~Widget()
 {
-	if (pParent_ != nullptr)
-		pParent_->removeChild(this);
-
 	if (windowHandle_ != nullptr)
 		CloseWindow(windowHandle_);
+
+	if (pParent_ != nullptr)
+		pParent_->removeChild(this);
 
 	delete pMainLayout_;
 
@@ -219,9 +219,7 @@ LRESULT Widget::proxyWidgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 	}
 
 	if (pWidget == nullptr)
-	{
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
-	}
 
 	pWidget->windowHandle_ = hWnd;
 	return pWidget->widgetProcedure(hWnd, uMsg, wParam, lParam);
@@ -239,26 +237,20 @@ LRESULT Widget::widgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	}
 	case WM_COMMAND: 
 	{
-		for (auto pChild : children())
-		{
+		const auto childWidgets = children();
+		for (auto pChild : childWidgets)
 			pChild->widgetProcedure(hWnd, uMsg, wParam, lParam);
-		}
 
 		return EXIT_SUCCESS;
 	}
 	case WM_PAINT:
 	{
-		if (!std::empty(children()))
-		{
-			for (auto pChild : children())
-			{
-				pChild->widgetProcedure(hWnd, uMsg, wParam, lParam);
-			}
-		}
-		else
-		{
+		const auto childWidgets = children();
+		if(std::empty(childWidgets))
 			return EXIT_SUCCESS;
-		}
+
+		for (auto pChild : childWidgets)
+			pChild->widgetProcedure(hWnd, uMsg, wParam, lParam);
 
 		break;
 	}
@@ -268,7 +260,9 @@ LRESULT Widget::widgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		{
 			const auto newWidth = static_cast<int>(LOWORD(lParam));
 			const auto newHeight = static_cast<int>(HIWORD(lParam));
-			pMainLayout_->setRect(Rect{ 0, 0, newWidth, newHeight });
+			pMainLayout_->setRect(Rect(0, 0, newWidth, newHeight));
+
+			return EXIT_SUCCESS;
 		}
 		break;
 	}
@@ -283,7 +277,7 @@ LRESULT Widget::widgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		auto lpMMI = reinterpret_cast<LPMINMAXINFO>(lParam);
 		lpMMI->ptMinTrackSize.x = minSz.width();
 		lpMMI->ptMinTrackSize.y = minSz.height();
-		break;
+		return EXIT_SUCCESS;
 	}
 
 	}
@@ -334,9 +328,9 @@ void Widget::setVerticalSizePolicy(SizePolicy policy)
 	verticalSizePolicy_ = policy;
 }
 
-void Widget::setFont(Font font)
+void Widget::setFont(const Font& font)
 {
-	font_ = std::move(font);
+	font_ = font;
 	if (font_.isNull())
 		return;
 
@@ -413,7 +407,7 @@ void Widget::removeChild(Widget* pChild)
 	}
 }
 
-const std::vector<Widget*>& Widget::children() const
+std::vector<Widget*> Widget::children() const
 {
 	return childrenPtrs_;
 }

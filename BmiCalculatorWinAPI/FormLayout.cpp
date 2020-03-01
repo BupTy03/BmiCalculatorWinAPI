@@ -80,6 +80,7 @@ void FormLayout::addRow(const std::wstring& labelText, Widget* pWidget)
 	assert(pWidget != nullptr);
 	auto pLabel = new Label(parent(), labelText);
 	pLabel->setHorizontalSizePolicy(SizePolicy::Minimum);
+	pLabel->setTextAlign(Align::ALIGN_RIGHT | Align::ALIGN_VCENTER);
 	pWidget->setParent(parent());
 	itemsPairs_.emplace_back(pLabel, pWidget);
 }
@@ -89,5 +90,6 @@ void FormLayout::addRow(const std::wstring& labelText, AbstractLayout* pLayout)
 	assert(pLayout != nullptr);
 	auto pLabel = new Label(parent(), labelText);
 	pLabel->setHorizontalSizePolicy(SizePolicy::Minimum);
+	pLabel->setTextAlign(Align::ALIGN_RIGHT | Align::ALIGN_VCENTER);
 	itemsPairs_.emplace_back(pLabel, pLayout);
 }

@@ -23,9 +23,9 @@ Label::~Label()
 	LogDebug("~Label()");
 }
 
-void Label::setBitmap(Bitmap bitmap)
+void Label::setBitmap(const Bitmap& bitmap)
 {
-	bitmap_ = std::move(bitmap);
+	bitmap_ = bitmap;
 }
 
 std::wstring Label::text() const
@@ -38,6 +38,16 @@ void Label::setText(std::wstring text)
 	text_ = std::move(text);
 }
 
+int Label::textAlign() const
+{
+	return textAlign_;
+}
+
+void Label::setTextAlign(int align)
+{
+	textAlign_ = align;
+}
+
 LRESULT Label::widgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
@@ -48,7 +58,7 @@ LRESULT Label::widgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 			painter_.drawBitmap(clientRect(), bitmap_, Rect(Point(0, 0), bitmap_.size()));
 
 		if (!std::empty(text_))
-			painter_.drawText(text_, font(), clientRect(), textColor(), Align::ALIGN_LEFT | Align::ALIGN_VCENTER);
+			painter_.drawText(text_, font(), clientRect(), textColor(), textAlign_);
 
 		break;
 	}

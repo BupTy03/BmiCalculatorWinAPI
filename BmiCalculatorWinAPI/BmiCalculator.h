@@ -10,9 +10,9 @@
 
 struct BmiCalculationResult
 {
-	explicit BmiCalculationResult(std::wstring text, Bitmap bitmap, Color color)
+	explicit BmiCalculationResult(std::wstring text, const Bitmap& bitmap, Color color)
 		: text_{std::move(text)}
-		, bitmap_{std::move(bitmap)}
+		, bitmap_{bitmap}
 		, color_{color} 
 	{}
 
