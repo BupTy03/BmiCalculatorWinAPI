@@ -6,9 +6,9 @@
 #include <sstream>
 
 
-BmiCalculator& BmiCalculator::instance()
+const BmiCalculator& BmiCalculator::instance()
 {
-	static BmiCalculator instance;
+	static const BmiCalculator instance;
 	return instance;
 }
 
@@ -24,7 +24,7 @@ static std::wstring DoubleToString(double value, int precision)
 }
 
 
-BmiCalculationResult BmiCalculator::calculate(int height, int weight, int age, bool gender)
+BmiCalculationResult BmiCalculator::calculate(int height, int weight, int age, bool gender) const
 {
 	const double heightInMeters = height * 0.01;
 	const double bmiValue = weight / static_cast<double>(heightInMeters * heightInMeters);
@@ -53,13 +53,13 @@ BmiCalculator::BmiCalculator()
 		L"Ожирение 4 степени"
 	},
 	fatLevelsColors_{
-		Color::makeRed(),
-		Color(124, 194, 159),
-		Color::makeRed(),
-		Color::makeRed(),
-		Color::makeRed(),
-		Color::makeRed(),
-		Color::makeRed(),
+		Color(149, 188, 221),
+		Color(125, 195, 159),
+		Color(253, 216, 20),
+		Color(244, 160, 70),
+		Color(231, 55, 65),
+		Color(231, 55, 65),
+		Color(231, 55, 65)
 	},
 	mensFatLevelsImages_{
 		Bitmap(IDB_BITMAP6),
@@ -80,7 +80,15 @@ BmiCalculator::BmiCalculator()
 		Bitmap(IDB_BITMAP5)
 	}
 {
-	// средний возраст
+	FatLevelsList littleAge;
+	littleAge.add(0, FatLevel::Underweight);
+	littleAge.add(15.3, FatLevel::Normal);
+	littleAge.add(17, FatLevel::Owerweight);
+	littleAge.add(18.3, FatLevel::FirstGradeObesity);
+	littleAge.add(20.3, FatLevel::SecondGradeObesity);
+	littleAge.add(25, FatLevel::ThirdGradeObesity);
+	littleAge.add(35, FatLevel::FourthGradeObesity);
+
 	FatLevelsList middleAge;
 	middleAge.add(0, FatLevel::Underweight);
 	middleAge.add(19.5, FatLevel::Normal);
@@ -90,7 +98,6 @@ BmiCalculator::BmiCalculator()
 	middleAge.add(35, FatLevel::ThirdGradeObesity);
 	middleAge.add(40, FatLevel::FourthGradeObesity);
 
-	// старший возраст
 	FatLevelsList oldAge;
 	oldAge.add(0, FatLevel::Underweight);
 	oldAge.add(20, FatLevel::Normal);
@@ -100,7 +107,8 @@ BmiCalculator::BmiCalculator()
 	oldAge.add(36, FatLevel::ThirdGradeObesity);
 	oldAge.add(41, FatLevel::FourthGradeObesity);
 
-	// таблица возрастов
-	bmiByAge_.add(0, std::move(middleAge));
+
+	bmiByAge_.add(0, std::move(littleAge));
+	bmiByAge_.add(18, std::move(middleAge));
 	bmiByAge_.add(30, std::move(oldAge));
 }

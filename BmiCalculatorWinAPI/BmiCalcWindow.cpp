@@ -16,6 +16,10 @@
 
 BmiCalcWindow::BmiCalcWindow()
 	: Window(nullptr, L"BmiCalcWindow", L"Калькулятор BMI")
+	, pHeightInput_{ new LineEdit(this) }
+	, pWeightInput_{ new LineEdit(this) }
+	, pAgeInput_{ new LineEdit(this) }
+	, pMenRadioButton_{ new RadioButton(this, L"мужской", true) }
 {
 	setMinSize(Size(400, 180));
 
@@ -27,19 +31,18 @@ BmiCalcWindow::BmiCalcWindow()
 	pFormLayout->setSpacing(6);
 	pVBoxLayout->addLayout(pFormLayout);
 
-	pFormLayout->addRow(L"Рост:", new LineEdit(this));
-	pFormLayout->addRow(L"Вес:", new LineEdit(this));
-	pFormLayout->addRow(L"Возраст:", new LineEdit(this));
+	pFormLayout->addRow(L"Рост:", pHeightInput_);
+	pFormLayout->addRow(L"Вес:", pWeightInput_);
+	pFormLayout->addRow(L"Возраст:", pAgeInput_);
 	
 	auto pRadioButtonsLayout = new HBoxLayout(this);
 
-	auto pMenRadioButton = new RadioButton(this, L"мужской", true);
-	pRadioButtonsLayout->addWidget(pMenRadioButton);
+	pRadioButtonsLayout->addWidget(pMenRadioButton_);
 
 	auto pWomenRadioButton = new RadioButton(this, L"женский");
 	pRadioButtonsLayout->addWidget(pWomenRadioButton);
 
-	pRadioButtonsLayout->setAlign(pMenRadioButton, Align::ALIGN_CENTER);
+	pRadioButtonsLayout->setAlign(pMenRadioButton_, Align::ALIGN_CENTER);
 	pRadioButtonsLayout->setAlign(pWomenRadioButton, Align::ALIGN_CENTER);
 
 	pFormLayout->addRow(L"Пол:", pRadioButtonsLayout);
@@ -71,12 +74,40 @@ BmiCalcWindow::~BmiCalcWindow()
 
 void BmiCalcWindow::showBMI()
 {
-	// TODO: get inputs from LineEdits
-	auto calcResult = BmiCalculator::instance().calculate(180, 70, 20, true);
+	tryCalculateBmi();
+}
 
-	auto pShowWindow = new ShowBmiWindow(this);
-	pShowWindow->setLabelBitmap(calcResult.bitmap());
-	pShowWindow->setLabelText(calcResult.text());
-	pShowWindow->setLabelTextColor(calcResult.color());
-	pShowWindow->show();
+void BmiCalcWindow::tryCalculateBmi()
+{
+	BmiCalculationResult calcResult;
+	try
+	{
+		const int height = std::stoi(pHeightInput_->text());
+		const int weight = std::stoi(pWeightInput_->text());
+		const int age = std::stoi(pAgeInput_->text());
+		const bool gender = pMenRadioButton_->isChecked();
+
+		calcResult = BmiCalculator::instance().calculate(height, weight, age, gender);
+
+		auto pShowWindow = new ShowBmiWindow(this);
+		pShowWindow->setLabelBitmap(calcResult.bitmap());
+		pShowWindow->setLabelText(calcResult.text());
+		pShowWindow->setLabelTextColor(calcResult.color());
+		pShowWindow->show();
+	}
+	catch (std::runtime_error& err)
+	{
+		showError(err.what());
+		return;
+	}
+	catch (...)
+	{
+		showError("Произошла непредвиденная ошибка :(");
+		return;
+	}
+}
+
+void BmiCalcWindow::showError(const std::string& message)
+{
+	MessageBoxA(getWindowHandle(), message.c_str(), "Ошибка", MB_ICONERROR | MB_OK);
 }

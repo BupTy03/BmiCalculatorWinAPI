@@ -10,6 +10,7 @@
 
 struct BmiCalculationResult
 {
+	BmiCalculationResult() = default;
 	explicit BmiCalculationResult(std::wstring text, const Bitmap& bitmap, Color color)
 		: text_{std::move(text)}
 		, bitmap_{bitmap}
@@ -48,10 +49,10 @@ class BmiCalculator
 	using BitmapsArray = std::array<Bitmap, FAT_LEVELS_COUNT>;
 
 public:
-	static BmiCalculator& instance();
+	static const BmiCalculator& instance();
 
 public:
-	BmiCalculationResult calculate(int height, int weight, int age, bool gender);
+	BmiCalculationResult calculate(int height, int weight, int age, bool gender) const;
 
 private:
 	BmiCalculator();

@@ -5,7 +5,8 @@
 #include <stdexcept>
 
 
-namespace SegmentsListImpl {
+namespace SegmentsListImpl 
+{
 
 	template<typename Comp = std::less<>>
 	struct CompareByFirst

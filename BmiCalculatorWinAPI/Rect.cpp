@@ -1,6 +1,11 @@
 #include "Rect.h"
 
 #include <iostream>
+#include <algorithm>
+
+
+#undef min
+#undef max
 
 
 // free functions
@@ -30,26 +35,29 @@ Rect MoveRect(const Rect& rect, const Point& pos)
 
 static Size ScaleSizeProportional(Size destSize, Size sourceSize)
 {
-	if (sourceSize.height() == 0)
+	if (sourceSize.height() == 0 || sourceSize.width() == 0)
 		return sourceSize;
 
-	Size result = destSize;
-	if (sourceSize.width() > sourceSize.height())
+	const double propSource = sourceSize.width() / static_cast<double>(sourceSize.height());
+	if (propSource > 1.0)
 	{
-		if(result.width() <= result.height())
-			result.setHeight(sourceSize.height() * result.width() / sourceSize.width());
-		else
-			result.setWidth(sourceSize.width() * result.height() / sourceSize.height());
-	}
-	else
-	{
-		if (result.width() >= result.height())
-			result.setWidth(sourceSize.width() * result.height() / sourceSize.height());
-		else
-			result.setHeight(sourceSize.height() * result.width() / sourceSize.width());
+		const int width = (destSize.width() >= destSize.height()) 
+			? destSize.width() 
+			: std::min(static_cast<int>(destSize.height() * propSource), destSize.width());
+
+		return Size(width, width * (propSource - 1.0));
 	}
 
-	return result;
+	if (propSource < 1.0)
+	{
+		const int height = (destSize.height() >= destSize.width())
+			? destSize.height()
+			: std::min(destSize.height(), static_cast<int>(destSize.width() / propSource));
+
+		return Size(height * propSource, height);
+	}
+
+	return Size(std::min(destSize.width(), destSize.height()), std::min(destSize.width(), destSize.height()));
 }
 
 Rect ScaleRect(const Rect& dest, const Rect& source)
