@@ -4,6 +4,7 @@
 
 #include <cassert>
 #include <sstream>
+#include <iomanip>
 
 
 const BmiCalculator& BmiCalculator::instance()
@@ -13,27 +14,16 @@ const BmiCalculator& BmiCalculator::instance()
 }
 
 
-static std::wstring DoubleToString(double value, int precision)
-{
-	assert(precision >= 0);
-
-	std::wostringstream sstr;
-	sstr.precision(precision);
-	sstr << value;
-	return sstr.str();
-}
-
-
 BmiCalculationResult BmiCalculator::calculate(int height, int weight, int age, bool gender) const
 {
 	const double heightInMeters = height * 0.01;
-	const double bmiValue = weight / static_cast<double>(heightInMeters * heightInMeters);
+	const double bmiValue = weight / (heightInMeters * heightInMeters);
 
 	const FatLevel fatLevel = bmiByAge_[age][bmiValue];
 	const std::wstring& message = fatLevelsStrings_.at(static_cast<std::size_t>(fatLevel));
 
 	return BmiCalculationResult(
-		L"Ваш BMI: " + DoubleToString(bmiValue, 2) + L". " + message,
+		L"Ваш BMI: " + std::to_wstring(bmiValue) + L". " + message,
 		gender 
 			? mensFatLevelsImages_.at(static_cast<std::size_t>(fatLevel)) 
 			: womensFatLevelsImages_.at(static_cast<std::size_t>(fatLevel)),
