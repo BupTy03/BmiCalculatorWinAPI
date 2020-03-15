@@ -117,6 +117,11 @@ bool Widget::isWidget() const
 	return true;
 }
 
+bool Widget::isWindow() const
+{
+	return false;
+}
+
 Size Widget::minSize() const
 {
 	return minSize_;

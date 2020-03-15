@@ -50,6 +50,8 @@ public:
 	bool isLayout() const override;
 	bool isWidget() const override;
 
+	virtual bool isWindow() const;
+
 	Size minSize() const override;
 	Size maxSize() const override;
 	Size normalSize() const override;
@@ -70,8 +72,8 @@ public:
 	int height() const;
 	void setHeight(int height);
 
-	void show();
-	void hide();
+	virtual void show();
+	virtual void hide();
 
 	SizePolicy horizontalSizePolicy() const;
 	void setHorizontalSizePolicy(SizePolicy policy);

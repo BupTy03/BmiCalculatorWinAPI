@@ -89,11 +89,15 @@ void BmiCalcWindow::tryCalculateBmi()
 
 		calcResult = BmiCalculator::instance().calculate(height, weight, age, gender);
 
-		auto pShowWindow = new ShowBmiWindow(this);
-		pShowWindow->setLabelBitmap(calcResult.bitmap());
-		pShowWindow->setLabelText(calcResult.text());
-		pShowWindow->setLabelTextColor(calcResult.color());
-		pShowWindow->show();
+		if (pShowWindow_ != nullptr)
+			delete pShowWindow_;
+
+		pShowWindow_ = new ShowBmiWindow(this);
+		pShowWindow_->setModal(true);
+		pShowWindow_->setLabelBitmap(calcResult.bitmap());
+		pShowWindow_->setLabelText(calcResult.text());
+		pShowWindow_->setLabelTextColor(calcResult.color());
+		pShowWindow_->show();
 	}
 	catch (std::runtime_error& err)
 	{

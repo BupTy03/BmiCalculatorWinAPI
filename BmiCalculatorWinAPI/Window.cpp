@@ -18,9 +18,82 @@ Window::Window(Window* parent, const std::wstring& className, const std::wstring
 		Application::instance().setMainWindow(this);
 }
 
+LRESULT Window::widgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	if (uMsg == WM_CLOSE)
+	{
+		if (parent() != nullptr)
+		{
+			Window& parentWindow = dynamic_cast<Window&>(*parent());
+			if (!parentWindow.activated())
+			{
+				parentWindow.activate();
+			}
+		}
+
+		return Widget::widgetProcedure(hWnd, uMsg, wParam, lParam);
+	}
+
+	return Widget::widgetProcedure(hWnd, uMsg, wParam, lParam);
+}
+
+bool Window::activated() const
+{
+	return IsWindowEnabled(getWindowHandle());;
+}
+
+void Window::activate()
+{
+	EnableWindow(getWindowHandle(), TRUE);
+}
+
+void Window::deactivate()
+{
+	EnableWindow(getWindowHandle(), FALSE);
+}
+
+Window::~Window()
+{
+	if (parent() == nullptr)
+		return;
+
+	dynamic_cast<Window&>(*parent()).activate();
+}
+
+bool Window::isWindow() const
+{
+	return true;
+}
+
 void Window::close()
 {
 	SendMessage(getWindowHandle(), WM_CLOSE, NULL, NULL);
+}
+
+bool Window::modal() const
+{
+	auto pParent = parent();
+	if (pParent == nullptr)
+		return false;
+
+	return !dynamic_cast<Window&>(*pParent).activated();
+}
+
+void Window::setModal(bool modal)
+{
+	auto pParent = parent();
+	if (pParent == nullptr)
+		return;
+
+	Window& parentWindow = dynamic_cast<Window&>(*pParent);
+	if (modal)
+	{
+		parentWindow.deactivate();
+	}
+	else
+	{
+		parentWindow.activate();
+	}
 }
 
 void Window::registerClass(const std::wstring& className)

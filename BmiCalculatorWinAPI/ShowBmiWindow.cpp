@@ -14,6 +14,8 @@ ShowBmiWindow::ShowBmiWindow(Window* parent)
 	, pBitmapLabel_{ new Label(this) }
 	, pTextLabel_{ new Label(this) }
 {
+	setSize(Size(650, 600));
+
 	auto pMainLayout = new VBoxLayout(this);
 
 	pBitmapLabel_->setVerticalSizePolicy(SizePolicy::Fill);

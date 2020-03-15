@@ -39,7 +39,6 @@ int Application::exec()
 void Application::setMainWindow(Window* pWindow)
 {
 	assert(pWindow != nullptr);
-	assert(pMainWindow_ == nullptr);
 	pMainWindow_ = pWindow;
 }
 
