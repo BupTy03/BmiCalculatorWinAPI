@@ -31,7 +31,9 @@ public:
 		Heavy = FW_HEAVY
 	};
 
-	Font() = default;
+	Font();
+	~Font();
+
 	explicit Font(
 		const std::wstring& name,
 		int height = 15,
@@ -44,8 +46,11 @@ public:
 	Font(const Font& other);
 	Font& operator=(const Font& other);
 
-	Font(Font&&) noexcept = default;
-	Font& operator=(Font&&) noexcept = default;
+	Font(Font&&) noexcept;
+	Font& operator=(Font&&) noexcept;
+
+	void swap(Font& other) noexcept;
+
 
 	HFONT nativeHandle() const;
 
@@ -68,6 +73,9 @@ public:
 
 private:
 	class FontImpl;
-	std::shared_ptr<const FontImpl> pImpl_;
+	std::unique_ptr<const FontImpl> pImpl_;
 };
+
+
+void swap(Font& lhs, Font& rhs) noexcept;
 

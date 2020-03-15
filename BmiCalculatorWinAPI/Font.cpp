@@ -41,14 +41,18 @@ public:
 			throw std::runtime_error{ "Unable to create font!" };
 	};
 
-	~FontImpl() { if(fontHandle_ != nullptr) DeleteObject(fontHandle_); }
-
-	std::shared_ptr<FontImpl> clone() const
-	{
-		return std::make_shared<FontImpl>(name_, height_, width_, style_, weight_, angle_);
+	~FontImpl() 
+	{ 
+		if(fontHandle_ != nullptr) 
+			DeleteObject(fontHandle_); 
 	}
 
-	static std::shared_ptr<FontImpl> Create(
+	auto clone() const
+	{
+		return std::make_unique<const FontImpl>(name_, height_, width_, style_, weight_, angle_);
+	}
+
+	static auto create(
 		const std::wstring& name,
 		int height,
 		int width,
@@ -57,7 +61,7 @@ public:
 		int angle
 	)
 	{
-		return std::make_shared<FontImpl>(name, height, width, style, weight, angle);
+		return std::make_unique<const FontImpl>(name, height, width, style, weight, angle);
 	}
 
 	FontImpl(const FontImpl&) = delete;
@@ -78,19 +82,27 @@ public:
 
 	const std::wstring& name() const { return name_; }
 
-
 private:
-	int height_ = 0;
-	int width_ = 0;
-	int angle_ = 0;
-	int style_ = FontStyle::Regular;
-	FontWeight weight_ = FontWeight::DontCare;
+	int height_{};
+	int width_{};
+	int angle_{};
+	int style_{ FontStyle::Regular };
+	FontWeight weight_{ FontWeight::DontCare };
 	std::wstring name_;
-	HFONT fontHandle_ = nullptr;
+	HFONT fontHandle_{};
 };
 
+
+Font::Font()
+{
+}
+
+Font::~Font()
+{
+}
+
 Font::Font(const std::wstring& name, int height, int width, int style, FontWeight weight, int angle)
-	: pImpl_{FontImpl::Create(name, height, width, style, weight, angle)}
+	: pImpl_{FontImpl::create(name, height, width, style, weight, angle)}
 {
 }
 
@@ -103,6 +115,15 @@ Font& Font::operator=(const Font& other)
 {
 	*this = Font(other);
 	return *this;
+}
+
+Font::Font(Font&&) noexcept = default;
+
+Font& Font::operator=(Font&&) noexcept = default;
+
+void Font::swap(Font& other) noexcept
+{
+	pImpl_.swap(other.pImpl_);
 }
 
 HFONT Font::nativeHandle() const
@@ -120,7 +141,7 @@ void Font::setFontStyle(int style)
 	if (style == pImpl_->style())
 		return;
 
-	pImpl_ = FontImpl::Create(pImpl_->name(), pImpl_->height(), pImpl_->width(), 
+	pImpl_ = FontImpl::create(pImpl_->name(), pImpl_->height(), pImpl_->width(), 
 		style, pImpl_->weight(), pImpl_->angle());
 }
 
@@ -134,7 +155,7 @@ void Font::setFontWeight(FontWeight weight)
 	if (weight == pImpl_->weight())
 		return;
 
-	pImpl_ = FontImpl::Create(pImpl_->name(), pImpl_->height(), pImpl_->width(),
+	pImpl_ = FontImpl::create(pImpl_->name(), pImpl_->height(), pImpl_->width(),
 		pImpl_->style(), weight, pImpl_->angle());
 }
 
@@ -148,7 +169,7 @@ void Font::setHeight(int height)
 	if (height == pImpl_->height())
 		return;
 
-	pImpl_ = FontImpl::Create(pImpl_->name(), height, pImpl_->width(),
+	pImpl_ = FontImpl::create(pImpl_->name(), height, pImpl_->width(),
 		pImpl_->style(), pImpl_->weight(), pImpl_->angle());
 }
 
@@ -162,7 +183,7 @@ void Font::setWidth(int width)
 	if (width == pImpl_->width())
 		return;
 
-	pImpl_ = FontImpl::Create(pImpl_->name(), pImpl_->height(), width,
+	pImpl_ = FontImpl::create(pImpl_->name(), pImpl_->height(), width,
 		pImpl_->style(), pImpl_->weight(), pImpl_->angle());
 }
 
@@ -176,11 +197,16 @@ void Font::setAngle(int angle)
 	if (angle == pImpl_->angle())
 		return;
 
-	pImpl_ = FontImpl::Create(pImpl_->name(), pImpl_->height(), pImpl_->width(),
+	pImpl_ = FontImpl::create(pImpl_->name(), pImpl_->height(), pImpl_->width(),
 		pImpl_->style(), pImpl_->weight(), angle);
 }
 
 int Font::angle() const
 {
 	return pImpl_->angle();
+}
+
+void swap(Font& lhs, Font& rhs) noexcept
+{
+	lhs.swap(rhs);
 }

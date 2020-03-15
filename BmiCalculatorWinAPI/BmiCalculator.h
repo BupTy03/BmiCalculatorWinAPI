@@ -42,11 +42,11 @@ class BmiCalculator
 
 	enum { FAT_LEVELS_COUNT = static_cast<std::size_t>(FatLevel::FourthGradeObesity) + 1 };
 
-	using FatLevelsStrings = std::array<std::wstring, FAT_LEVELS_COUNT>;
-	using FatLevelsColors = std::array<Color, FAT_LEVELS_COUNT>;
+	using FatLevelStrings = std::array<std::wstring, FAT_LEVELS_COUNT>;
+	using FatLevelColors = std::array<Color, FAT_LEVELS_COUNT>;
 	using FatLevelsList = SegmentsList<double, FatLevel>;
 	using AgesBMIList = SegmentsList<int, FatLevelsList>;
-	using BitmapsArray = std::array<Bitmap, FAT_LEVELS_COUNT>;
+	using FatLevelImages = std::array<Bitmap, FAT_LEVELS_COUNT>;
 
 public:
 	static const BmiCalculator& instance();
@@ -60,10 +60,10 @@ private:
 	BmiCalculator& operator=(const BmiCalculator&) = delete;
 
 private:
-	FatLevelsStrings fatLevelsStrings_;
-	FatLevelsColors fatLevelsColors_;
-	BitmapsArray mensFatLevelsImages_;
-	BitmapsArray womensFatLevelsImages_;
+	FatLevelStrings fatLevelsStrings_;
+	FatLevelColors fatLevelsColors_;
+	FatLevelImages mensFatLevelsImages_;
+	FatLevelImages womensFatLevelsImages_;
 	AgesBMIList bmiByAge_;
 };
 

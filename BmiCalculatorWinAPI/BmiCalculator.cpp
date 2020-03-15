@@ -16,7 +16,7 @@ const BmiCalculator& BmiCalculator::instance()
 
 BmiCalculationResult BmiCalculator::calculate(int height, int weight, int age, bool gender) const
 {
-	const double heightInMeters = height * 0.01;
+	const double heightInMeters = height / 100.0;
 	const double bmiValue = weight / (heightInMeters * heightInMeters);
 
 	const FatLevel fatLevel = bmiByAge_[age][bmiValue];

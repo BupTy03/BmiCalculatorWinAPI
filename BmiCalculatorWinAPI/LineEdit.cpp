@@ -12,6 +12,10 @@ LineEdit::LineEdit(Widget* pParent)
 {
 	setNormalSize(Size{ 120, 23 });
 	setMinSize(Size{ 50, 23 });
+
+	auto currentFont = font();
+	currentFont.setHeight(19);
+	setFont(currentFont);
 }
 
 LineEdit::~LineEdit()

@@ -1,23 +1,29 @@
 #pragma once
 
+#include "Size.h"
+#include "Application.h"
+
 #include <memory>
+#include <stdexcept>
 
 #include <Windows.h>
 
 
-class Size;
-
 class Bitmap final
 {
 public:
-	Bitmap() = default;
+	Bitmap();
+	~Bitmap();
+
 	explicit Bitmap(int resourceID);
 
-	Bitmap(const Bitmap& other);
-	Bitmap& operator=(const Bitmap& other);
+	Bitmap(const Bitmap&);
+	Bitmap& operator=(const Bitmap&);
 
-	Bitmap(Bitmap&&) noexcept = default;
-	Bitmap& operator=(Bitmap&&) noexcept = default;
+	Bitmap(Bitmap&&) noexcept;
+	Bitmap& operator=(Bitmap&&) noexcept;
+
+	void swap(Bitmap& other) noexcept;
 
 	void loadFromResource(int resourceID);
 	bool isNull() const;
@@ -29,7 +35,9 @@ public:
 	int height() const;
 
 private:
-	class BitmapImpl;
-	std::shared_ptr<const BitmapImpl> pImpl_;
+	class BitmapData;
+	std::unique_ptr<const BitmapData> pData_;
 };
+
+void swap(Bitmap& lhs, Bitmap& rhs) noexcept;
 
