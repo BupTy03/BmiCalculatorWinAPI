@@ -54,11 +54,11 @@ void Painter::drawText(const std::wstring& text, const Font& font, const Rect& r
 		HDC paintDeviceDC = GetDC(pPaintDevice_->getWindowHandle());
 		SelectObject(paintDeviceDC, font.nativeHandle());
 
-		TEXTMETRIC tm;
-		GetTextMetrics(paintDeviceDC, &tm);
+		SIZE sz;
+		GetTextExtentPoint32W(paintDeviceDC, text.c_str(), std::size(text), &sz);
 
-		textSize.setWidth(tm.tmAveCharWidth * std::size(text));
-		textSize.setHeight(tm.tmHeight + tm.tmExternalLeading);
+		textSize.setWidth(sz.cx);
+		textSize.setHeight(sz.cy);
 
 		ReleaseDC(pPaintDevice_->getWindowHandle(), paintDeviceDC);
 
