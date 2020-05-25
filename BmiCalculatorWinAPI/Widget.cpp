@@ -242,20 +242,20 @@ LRESULT Widget::widgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	}
 	case WM_COMMAND: 
 	{
-		const auto childWidgets = children();
-		for (auto pChild : childWidgets)
-			pChild->widgetProcedure(hWnd, uMsg, wParam, lParam);
+		const auto& childrenWidgets = children();
+		for (std::size_t i = 0; i < childrenWidgets.size(); ++i)
+			childrenWidgets.at(i)->widgetProcedure(hWnd, uMsg, wParam, lParam);
 
 		return EXIT_SUCCESS;
 	}
 	case WM_PAINT:
 	{
-		const auto childWidgets = children();
-		if(std::empty(childWidgets))
+		const auto& childrenWidgets = children();
+		if(childrenWidgets.empty())
 			return EXIT_SUCCESS;
 
-		for (auto pChild : childWidgets)
-			pChild->widgetProcedure(hWnd, uMsg, wParam, lParam);
+		for (std::size_t i = 0; i < childrenWidgets.size(); ++i)
+			childrenWidgets.at(i)->widgetProcedure(hWnd, uMsg, wParam, lParam);
 
 		break;
 	}
@@ -412,7 +412,7 @@ void Widget::removeChild(Widget* pChild)
 	}
 }
 
-std::vector<Widget*> Widget::children() const
+const std::vector<Widget*>& Widget::children() const
 {
 	return childrenPtrs_;
 }

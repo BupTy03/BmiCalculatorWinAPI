@@ -100,7 +100,7 @@ public:
 	void addChild(Widget* pChild);
 	void removeChild(Widget* pChild);
 
-	std::vector<Widget*> children() const;
+	const std::vector<Widget*>& children() const;
 
 protected:
 	static LRESULT CALLBACK proxyWidgetProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
